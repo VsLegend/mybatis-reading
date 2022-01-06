@@ -1,0 +1,33 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.100.248.250:3306/mybatisreading?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: Wong20211221@mysql1110
+
+mybatis:
+  configuration:
+    # 缓存仅对单个statement起作用
+#    local-cache-scope: statement
+    # mybatis会话执行的所有语句共享一个缓存，默认设置
+    local-cache-scope: session
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: mybatisreading.domain
+
+
+# 日志配置
+logging:
+  level:
+    com.example.mybatisread: debug
+#    com.ruoyi: debug
+#    org.springframework: debug
+
+springdoc:
+  swagger-ui:
+    path: /v3-ui.html
+  api-docs:
+    enabled: true
+    path: /api-doc
+  paths-to-match: /**

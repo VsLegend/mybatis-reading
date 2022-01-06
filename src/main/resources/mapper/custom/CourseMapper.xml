@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatisreading.mapper.CourseMapper">
+
+    <resultMap type="mybatisreading.domain.Course" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="classId" column="class_id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,    
+        name,    
+        class_id    
+    </sql>
+    <insert id="insert" parameterType="course">
+        INSERT INTO course (`name`, class_id, `type`) VALUES (#{name}, #{classId}, #{type})
+    </insert>
+
+
+    <select id="getPageList" resultMap="BaseResultMap">
+        select
+        id,
+        name,
+        class_id
+
+        from course
+        <where>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+        </where>
+        ORDER BY update_time DESC
+    </select>
+
+</mapper>
+
