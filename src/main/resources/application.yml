@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.100.248.250:3306/mybatisreading?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/mybatisreading?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true&allowPublicKeyRetrieval=true
     username: root
-    password: Wong20211221@mysql1110
+    password: admin@12345
 
 mybatis:
   configuration:
@@ -14,7 +14,7 @@ mybatis:
     # mybatis会话执行的所有语句共享一个缓存，默认设置
     local-cache-scope: session
   mapper-locations: classpath*:mapper/**/*.xml
-  type-aliases-package: mybatisreading.domain
+  type-aliases-package: mybatisreading.domain, mybatisreading.do2
 
 
 # 日志配置
