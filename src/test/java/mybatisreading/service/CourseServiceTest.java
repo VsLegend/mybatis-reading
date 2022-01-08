@@ -1,10 +1,13 @@
 package mybatisreading.service;
 
 import mybatisreading.domain.Course;
+import mybatisreading.domain.query.CourseQuery;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,5 +33,9 @@ class CourseServiceTest {
 
     @Test
     void getPageList() {
+        CourseQuery query = new CourseQuery();
+        query.setType("1");
+        List<Course> pageList = courseService.getPageList(query);
+        System.out.println(pageList);
     }
 }

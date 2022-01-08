@@ -11,24 +11,22 @@
 
     <sql id="Base_Column_List">
         id,    
-        name,    
-        class_id    
+        `name`,
+        class_id,
+        `type`
     </sql>
-    <insert id="insert" parameterType="course">
+    <insert id="insert" parameterType="aliasForCourse">
         INSERT INTO course (`name`, class_id, `type`) VALUES (#{name}, #{classId}, #{type})
     </insert>
 
 
     <select id="getPageList" resultMap="BaseResultMap">
         select
-        id,
-        name,
-        class_id
-
+        <include refid="Base_Column_List" />
         from course
         <where>
-            <if test="status != null and status != ''">
-                AND status = #{status}
+            <if test="type != null and type != ''">
+                AND type = #{type}
             </if>
         </where>
         ORDER BY update_time DESC
