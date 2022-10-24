@@ -1,7 +1,7 @@
 package mybatisreading.service.impl;
 
 import mybatisreading.domain.Score;
-import mybatisreading.mapper.ScoreDao;
+import mybatisreading.mapper.ScoreMapper;
 import mybatisreading.service.ScoreService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @Service("scoreService")
 public class ScoreServiceImpl implements ScoreService {
     @Resource
-    private ScoreDao scoreDao;
+    private ScoreMapper scoreMapper;
 
     /**
      * 通过ID查询单条数据
@@ -27,7 +27,7 @@ public class ScoreServiceImpl implements ScoreService {
      */
     @Override
     public Score queryById(Integer id) {
-        return this.scoreDao.queryById(id);
+        return this.scoreMapper.queryById(id);
     }
 
     /**
@@ -39,7 +39,7 @@ public class ScoreServiceImpl implements ScoreService {
      */
     @Override
     public List<Score> queryAllByLimit(int offset, int limit) {
-        return this.scoreDao.queryAllByLimit(offset, limit);
+        return this.scoreMapper.queryAllByLimit(offset, limit);
     }
 
     /**
@@ -50,7 +50,7 @@ public class ScoreServiceImpl implements ScoreService {
      */
     @Override
     public Score insert(Score score) {
-        this.scoreDao.insert(score);
+        this.scoreMapper.insert(score);
         return score;
     }
 
@@ -62,7 +62,7 @@ public class ScoreServiceImpl implements ScoreService {
      */
     @Override
     public Score update(Score score) {
-        this.scoreDao.update(score);
+        this.scoreMapper.update(score);
         return this.queryById(score.getId());
     }
 
@@ -74,6 +74,6 @@ public class ScoreServiceImpl implements ScoreService {
      */
     @Override
     public boolean deleteById(Integer id) {
-        return this.scoreDao.deleteById(id) > 0;
+        return this.scoreMapper.deleteById(id) > 0;
     }
 }

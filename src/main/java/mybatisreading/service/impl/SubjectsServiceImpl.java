@@ -1,7 +1,7 @@
 package mybatisreading.service.impl;
 
 import mybatisreading.domain.Subjects;
-import mybatisreading.mapper.SubjectsDao;
+import mybatisreading.mapper.SubjectsMapper;
 import mybatisreading.service.SubjectsService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @Service("subjectsService")
 public class SubjectsServiceImpl implements SubjectsService {
     @Resource
-    private SubjectsDao subjectsDao;
+    private SubjectsMapper subjectsMapper;
 
     /**
      * 通过ID查询单条数据
@@ -27,7 +27,7 @@ public class SubjectsServiceImpl implements SubjectsService {
      */
     @Override
     public Subjects queryById(Integer id) {
-        return this.subjectsDao.queryById(id);
+        return this.subjectsMapper.queryById(id);
     }
 
     /**
@@ -39,7 +39,7 @@ public class SubjectsServiceImpl implements SubjectsService {
      */
     @Override
     public List<Subjects> queryAllByLimit(int offset, int limit) {
-        return this.subjectsDao.queryAllByLimit(offset, limit);
+        return this.subjectsMapper.queryAllByLimit(offset, limit);
     }
 
     /**
@@ -50,7 +50,7 @@ public class SubjectsServiceImpl implements SubjectsService {
      */
     @Override
     public Subjects insert(Subjects subjects) {
-        this.subjectsDao.insert(subjects);
+        this.subjectsMapper.insert(subjects);
         return subjects;
     }
 
@@ -62,7 +62,7 @@ public class SubjectsServiceImpl implements SubjectsService {
      */
     @Override
     public Subjects update(Subjects subjects) {
-        this.subjectsDao.update(subjects);
+        this.subjectsMapper.update(subjects);
         return this.queryById(subjects.getId());
     }
 
@@ -74,6 +74,6 @@ public class SubjectsServiceImpl implements SubjectsService {
      */
     @Override
     public boolean deleteById(Integer id) {
-        return this.subjectsDao.deleteById(id) > 0;
+        return this.subjectsMapper.deleteById(id) > 0;
     }
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatisreading.mapper.UsersMapper">
+
+    <resultMap id="BaseResultMap" type="mybatisreading.domain.Users">
+        <!--@Table users-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="query" resultType="java.util.LinkedHashMap">
+        SELECT *
+        FROM
+        (
+            SELECT
+            u.`name`,
+            <foreach item="item" index="index" collection="subjects" separator=",">
+                MAX(case su.id when #{item.id} then s.score else 0 end) AS ${item.subjectId}
+            </foreach>
+                ,
+            (
+                <foreach item="item" index="index" collection="subjects" separator="+">
+                    MAX(case su.id when #{item.id} then s.score else 0 end)
+                </foreach>
+            ) total
+            FROM users u
+            LEFT JOIN score s ON u.id = s.user_id
+            LEFT JOIN subjects su ON su.id = s.subject_id
+            GROUP BY u.`name`
+        ) r
+        <if test="subjectId != null">
+            <choose>
+                <when test='sort != null and sort == "1"'>
+                    ORDER BY ${subjectId}
+                </when>
+                <otherwise>
+                    ORDER BY ${subjectId} DESC
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into test.users(name)
+        values (#{name})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update test.users
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from test.users where id = #{id}
+    </delete>
+
+</mapper>

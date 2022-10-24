@@ -6,6 +6,7 @@ import mybatisreading.domain.vo.CourseVo;
 import mybatisreading.domain.query.CourseQuery;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CourseService {
 
@@ -14,5 +15,6 @@ public interface CourseService {
     Course select(Long id);
 
     List<Course> getPageList(CourseQuery query);
+
 
 }

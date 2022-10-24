@@ -1,5 +1,7 @@
 package mybatisreading.domain;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2022-10-24 14:12:35
  */
+@Data
 public class Subjects implements Serializable {
     private static final long serialVersionUID = -14496556922745097L;
     
@@ -17,21 +20,7 @@ public class Subjects implements Serializable {
     */
     private String name;
 
-
-    public Integer getId() {
-        return id;
+    public String getSubjectId() {
+        return "subject" + id;
     }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 }

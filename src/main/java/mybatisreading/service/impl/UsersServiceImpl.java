@@ -1,12 +1,17 @@
 package mybatisreading.service.impl;
 
-import mybatisreading.domain.Users;
-import mybatisreading.mapper.UsersDao;
+import mybatisreading.domain.Subjects;
+import mybatisreading.domain.dto.StatDTO;
+import mybatisreading.domain.query.StatQuery;
+import mybatisreading.mapper.SubjectsMapper;
+import mybatisreading.mapper.UsersMapper;
 import mybatisreading.service.UsersService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Users)表服务实现类
@@ -17,63 +22,25 @@ import java.util.List;
 @Service("usersService")
 public class UsersServiceImpl implements UsersService {
     @Resource
-    private UsersDao usersDao;
+    private UsersMapper usersMapper;
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    @Override
-    public Users queryById(Integer id) {
-        return this.usersDao.queryById(id);
-    }
+    @Resource
+    private SubjectsMapper subjectsMapper;
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
     @Override
-    public List<Users> queryAllByLimit(int offset, int limit) {
-        return this.usersDao.queryAllByLimit(offset, limit);
-    }
+    public StatDTO table() {
+        StatQuery query = new StatQuery();
+        StatDTO statDTO = new StatDTO();
+        // 查询所有科目（表头）
+        Map<Integer, Subjects> subjectsMap = subjectsMapper.queryAll();
+        statDTO.setHeaders(subjectsMap);
 
-    /**
-     * 新增数据
-     *
-     * @param users 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Users insert(Users users) {
-        this.usersDao.insert(users);
-        return users;
-    }
+        // 设置表头参数，用作动态表头
+        query.setSubjects(new ArrayList<>(subjectsMap.values()));
 
-    /**
-     * 修改数据
-     *
-     * @param users 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Users update(Users users) {
-        this.usersDao.update(users);
-        return this.queryById(users.getId());
-    }
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    @Override
-    public boolean deleteById(Integer id) {
-        return this.usersDao.deleteById(id) > 0;
+        // 表数据查询
+        List<Map<String, Object>> contents = usersMapper.query(query);
+        statDTO.setContents(contents);
+        return statDTO;
     }
 }
